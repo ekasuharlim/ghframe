@@ -14,3 +14,5 @@ This document outlines the setup for a development environment on Windows using 
 
 ### Install WSL and Debian (if not installed)
 
+### Spin up all related servers for development
+Run docker compose up -d

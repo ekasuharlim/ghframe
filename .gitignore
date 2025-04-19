@@ -514,3 +514,7 @@ pnpm-debug.log*
 # ✅ Editor-specific (if Vue code is edited in separate folder)
 *.code-workspace
 .vscode/
+
+# Ignore MySQL data folder
+mysql-data/
+*.bak
