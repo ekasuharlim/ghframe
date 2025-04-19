@@ -1,85 +1,96 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { useAuthenticationStore } from '@/stores/authentication'
+import { Permissions } from '@/models'
+
+const authStore = useAuthenticationStore()
+const router = useRouter()
+
+async function logout() {
+  const result = await authStore.logout()
+
+  if (result.isSuccess) {
+    return router.replace({ name: 'home' })
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <template v-if="authStore.isLoading">
+    <span>Loading...</span>
+  </template>
+  <template v-else>
+    <header>
+      <div class="wrapper">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Main navigation">
+          <div class="container-fluid">
+            <RouterLink class="navbar-brand" :to="{ name: 'home' }">Home</RouterLink>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <template v-if="authStore.isAuthenticated">
+                  <li class="nav-item">
+                    <RouterLink class="nav-link" to="#">{{ authStore?.user?.username }}</RouterLink>
+                  </li>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+                  <li class="nav-item">
+                    <RouterLink
+                      activeClass="active"
+                      class="nav-link"
+                      :to="{ name: 'authentication-permissions' }"
+                      >Permissions</RouterLink
+                    >
+                  </li>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+                  <li v-if="authStore.hasPermission(Permissions.RoleCreate)" class="nav-item">
+                    <RouterLink
+                      activeClass="active"
+                      class="nav-link"
+                      :to="{ name: 'authorization-roles' }"
+                      >Roles</RouterLink
+                    >
+                  </li>
 
-  <RouterView />
+                  <li class="nav-item">
+                    <button @click="logout" class="btn btn-outline-danger">Logout</button>
+                  </li>
+                </template>
+                <template v-else>
+                  <li class="nav-item">
+                    <RouterLink
+                      activeClass="active"
+                      class="nav-link"
+                      :to="{ name: 'authentication-login' }"
+                      >Login</RouterLink
+                    >
+                  </li>
+
+                  <li class="nav-item">
+                    <RouterLink
+                      activeClass="active"
+                      class="nav-link"
+                      :to="{ name: 'authentication-register' }"
+                      >Register</RouterLink
+                    >
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <RouterView />
+  </template>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
