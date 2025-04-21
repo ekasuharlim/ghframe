@@ -83,6 +83,11 @@ builder.Services.AddTransient<IClaimsTransformation, PermissionClaimsTransformat
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
 const string defaultCorsPolicyName = "Default";
 
 builder.Services.AddCors(options =>
@@ -97,6 +102,7 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
@@ -126,6 +132,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -147,6 +156,14 @@ app.UseAuthorization();
 
 app.UseAntiforgery();
 
+app.MapGet("antiforgery/token", (IAntiforgery forgeryService, HttpContext context) =>
+{
+    var tokens = forgeryService.GetAndStoreTokens(context);
+    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken!,
+            new CookieOptions { HttpOnly = false });
+
+    return Results.Ok();
+});
 
 app.MapAuthenticationEndpoints();
 app.MapAuthorizationEndpoints();

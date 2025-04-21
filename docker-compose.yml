@@ -12,9 +12,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - backend
+    user: "1001:1001"
 
 volumes:
   mysql_data:

@@ -39,12 +39,14 @@ public static class DatabaseSeeder
 
             adminRole.AddPermissions(permissions);
             await roleManager.UpdateAsync(adminRole);
-
+            
             var adminUser = ApplicationUser.Create();
             await userManager.SetEmailAsync(adminUser, configuration["Admin:Email"]);
             await userManager.SetUserNameAsync(adminUser, configuration["Admin:Username"]);
             await userManager.CreateAsync(adminUser, configuration["Admin:Password"]!);
             await userManager.AddToRoleAsync(adminUser, ApplicationRoles.Administrator);
+            
         }
+
     }
 }

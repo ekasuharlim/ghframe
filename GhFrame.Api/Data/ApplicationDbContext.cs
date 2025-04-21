@@ -15,7 +15,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(null);
 
         modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
     }

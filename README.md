@@ -16,3 +16,11 @@ This document outlines the setup for a development environment on Windows using 
 
 ### Spin up all related servers for development
 Run docker compose up -d
+
+
+Part of this code is based on this article:
+https://medium.com/@hasanovtural11/permission-based-authentication-and-authorization-in-net-and-vue-js-through-jwt-tokens-5cec440ecf4e
+
+
+TODO:
+21-4-25 use bind mound volume in mysql docker instead of named volume
