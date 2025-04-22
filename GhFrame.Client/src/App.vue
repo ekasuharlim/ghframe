@@ -14,83 +14,66 @@ async function logout() {
   }
 }
 </script>
-
 <template>
-  <template v-if="authStore.isLoading">
-    <span>Loading...</span>
-  </template>
-  <template v-else>
-    <header>
-      <div class="wrapper">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Main navigation">
-          <div class="container-fluid">
-            <RouterLink class="navbar-brand" :to="{ name: 'home' }">Home</RouterLink>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <template v-if="authStore.isAuthenticated">
-                  <li class="nav-item">
-                    <RouterLink class="nav-link" to="#">{{ authStore?.user?.username }}</RouterLink>
-                  </li>
+  <v-app style="width: 100%">
+    <v-progress-linear v-if="authStore.isLoading" indeterminate color="primary" height="4" />
 
-                  <li class="nav-item">
-                    <RouterLink
-                      activeClass="active"
-                      class="nav-link"
-                      :to="{ name: 'authentication-permissions' }"
-                      >Permissions</RouterLink
-                    >
-                  </li>
+    <v-app-bar app color="primary" dark>
+      <v-app-bar-title>
+        <RouterLink :to="{ name: 'home' }" class="text-white text-decoration-none">Home</RouterLink>
+      </v-app-bar-title>
 
-                  <li v-if="authStore.hasPermission(Permissions.RoleCreate)" class="nav-item">
-                    <RouterLink
-                      activeClass="active"
-                      class="nav-link"
-                      :to="{ name: 'authorization-roles' }"
-                      >Roles</RouterLink
-                    >
-                  </li>
+      <v-spacer />
 
-                  <li class="nav-item">
-                    <button @click="logout" class="btn btn-outline-danger">Logout</button>
-                  </li>
-                </template>
-                <template v-else>
-                  <li class="nav-item">
-                    <RouterLink
-                      activeClass="active"
-                      class="nav-link"
-                      :to="{ name: 'authentication-login' }"
-                      >Login</RouterLink
-                    >
-                  </li>
+      <template v-if="authStore.isAuthenticated">
+        <v-btn text>
+          {{ authStore?.user?.username }}
+        </v-btn>
 
-                  <li class="nav-item">
-                    <RouterLink
-                      activeClass="active"
-                      class="nav-link"
-                      :to="{ name: 'authentication-register' }"
-                      >Register</RouterLink
-                    >
-                  </li>
-                </template>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
+        <v-btn
+          text
+          :to="{ name: 'authentication-permissions' }"
+          tag="RouterLink"
+        >
+          Permissions
+        </v-btn>
 
-    <RouterView />
-  </template>
+        <v-btn
+          v-if="authStore.hasPermission(Permissions.RoleCreate)"
+          text
+          :to="{ name: 'authorization-roles' }"
+          tag="RouterLink"
+        >
+          Roles
+        </v-btn>
+
+        <v-btn text color="red" @click="logout">
+          Logout
+        </v-btn>
+      </template>
+
+      <template v-else>
+        <v-btn
+          text
+          :to="{ name: 'authentication-login' }"
+          tag="RouterLink"
+        >
+          Login
+        </v-btn>
+        <v-btn
+          text
+          :to="{ name: 'authentication-register' }"
+          tag="RouterLink"
+        >
+          Register
+        </v-btn>
+      </template>
+    </v-app-bar>
+
+    <v-main>
+      <v-container fluid>
+        <RouterView />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
