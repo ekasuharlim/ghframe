@@ -67,6 +67,9 @@ public class JwtProvider(
 
     public async Task<Result> RevokeToken(ClaimsPrincipal principal)
     {
+        Console.WriteLine("RevokeToken");
+        Console.WriteLine(principal.Claims);
+        
         var jti = principal.Claims
                 .Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 

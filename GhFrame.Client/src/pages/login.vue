@@ -9,10 +9,12 @@ import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
 
+const { appContext } = getCurrentInstance()
+const companyName = appContext.config.globalProperties.$companyName
 
 const form = ref({
-  email: '',
-  password: '',
+  email: 'admin@example.com',
+  password: 'Admin@12345',
   remember: false,
 })
 
@@ -62,14 +64,14 @@ async function login(): Promise<void> {
             v-html="logo"
           />
           <h2 class="font-weight-medium text-2xl text-uppercase">
-            Canasoft
+            {{companyName}}
           </h2>
         </RouterLink>
       </VCardItem>
 
       <VCardText class="pt-2">
         <h4 class="text-h4 mb-1">
-          Welcome to Canasoft 👋🏻
+          Welcome to {{companyName}} 👋🏻
         </h4>
         <p class="mb-0">
           Please sign-in to your account

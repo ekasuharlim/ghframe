@@ -33,6 +33,7 @@ public static class AuthenticationEndpoints
             .Produces<UnauthorizedHttpResult>(StatusCodes.Status401Unauthorized);
 
         group.MapGet("logout", Logout)
+            .RequireAuthorization()
             .WithName(nameof(Logout))
             .Produces<Ok>(StatusCodes.Status200OK)
             .Produces<UnauthorizedHttpResult>(StatusCodes.Status401Unauthorized);
