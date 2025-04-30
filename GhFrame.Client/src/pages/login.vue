@@ -30,10 +30,11 @@ const isPasswordVisible = ref(false)
 const authStore = useAuthenticationStore()
 const router = useRouter()
 
-async function login(): void {
+async function login(): Promise<void> {
   const result: Result = await authStore.login(form.value.email,form.value.password)
 
   if (result.isSuccess) {
+    alert('success');
     return router.replace({ name: 'home' })
   }
 

@@ -5,8 +5,17 @@ export const routes = [
     children: [
       {
         path: 'content',
+        name: 'content',
         component: () => import('@/pages/content-view.vue'),
-      }
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'home',
+        name: 'home',
+        component: () => import('@/pages/home-view.vue'),
+        meta: { requiresAuth: true },
+      },
+
     ],
    },
 
@@ -15,11 +24,8 @@ export const routes = [
     component: () => import('@/layouts/blank.vue'),
     children: [
       {
-        path: 'home',
-        component: () => import('@/pages/home-view.vue'),
-      },
-      {
         path: 'login',
+        name: 'login',
         component: () => import('@/pages/login.vue'),
       },
       
