@@ -4,12 +4,8 @@ namespace GhFrame.Api.Models;
 
 public class ApplicationUserRole : IdentityUserRole<Guid>
 {
-    public ApplicationUser User { get; init;}
-    public ApplicationRole Role { get; init;}
+    public required ApplicationUser User { get; init;}
+    public required ApplicationRole Role { get; init;}
 
-    public ApplicationUserRole(ApplicationUser user, ApplicationRole role) {
-        User = user;
-        Role = role;
-    }
 
 }

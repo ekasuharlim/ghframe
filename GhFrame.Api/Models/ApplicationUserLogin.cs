@@ -4,11 +4,7 @@ namespace GhFrame.Api.Models;
 
 public class ApplicationUserLogin : IdentityUserLogin<Guid>
 {
-    public ApplicationUser User { get; init; }
+    public required ApplicationUser User { get; set; }
 
-    public ApplicationUserLogin(ApplicationUser user) 
-    {
-        User = user;
-    }    
 
 }
