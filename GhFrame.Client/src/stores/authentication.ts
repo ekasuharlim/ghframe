@@ -71,16 +71,20 @@ export const useAuthenticationStore = defineStore('authentication', () => {
 
   async function logout(): Promise<Result<string>> {
     try {
-      await usePrivateHttpClient().get('api/authentication/logout')
+      const response = await usePrivateHttpClient().get('api/authentication/logout')
+
+      if(response.status === 200) {
+        user.value = nullUser
+        accessToken.value = ''
+        refreshToken.value = ''    
+      }else {
+        return Result.failure(AppError.failure('Logout failed'))
+      }
     } catch (error) {
-      //
+      console.error('logout error', error);
+      alert('Logout failed. Please try again.')
     }
 
-    user.value = nullUser
-    accessToken.value = ''
-    refreshToken.value = ''
-
-    return Result.success('Logout successful')
   }
 
   async function getUserInfo(): Promise<Result<string>> {
