@@ -16,7 +16,7 @@ public class RefreshToken
 
     public Guid UserId { get; }
 
-    public ApplicationUser User { get; }
+    public ApplicationUser? User { get;}
 
     public RefreshToken(
         string jwtId,
@@ -31,9 +31,6 @@ public class RefreshToken
         UserId = userId;
     }
 
-    private RefreshToken()
-    {
-    }
 
     public void Invalidate()
     {

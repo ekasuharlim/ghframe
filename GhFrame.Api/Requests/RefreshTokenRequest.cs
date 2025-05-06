@@ -4,7 +4,7 @@ namespace GhFrame.Api.Requests;
 
 public sealed record RefreshTokenRequest
 {
-    public string AccessToken { get; init; }
+    public string AccessToken { get; init; }  = string.Empty;
 
-    public string RefreshToken { get; init; }
+    public string RefreshToken { get; init; } = string.Empty;
 }
