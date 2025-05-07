@@ -4,6 +4,6 @@ namespace GhFrame.Api.Models;
 
 public class ApplicationRoleClaim : IdentityRoleClaim<Guid>
 {
-    public required ApplicationRole Role { get; init; }
+    public required ApplicationRole Role { get; set; }
 
 }

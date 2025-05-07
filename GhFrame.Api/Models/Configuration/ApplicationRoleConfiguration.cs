@@ -12,13 +12,13 @@ public class ApplicationRoleConfiguration : IEntityTypeConfiguration<Application
         builder.ToTable(_tableName);
 
         builder.HasMany(r => r.UserRoles)
-            .WithOne()
+            .WithOne(aur => aur.Role)
             .HasForeignKey(ur => ur.RoleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(r => r.RoleClaims)
-            .WithOne()
+            .WithOne(auc => auc.Role)
             .HasForeignKey(rc => rc.RoleId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);

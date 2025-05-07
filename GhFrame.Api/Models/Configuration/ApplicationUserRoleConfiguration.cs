@@ -10,5 +10,18 @@ public class ApplicationUserRoleConfiguration : IEntityTypeConfiguration<Applica
     public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
     {
         builder.ToTable(_tableName);
+
+        builder.HasOne(role => role.User)
+            .WithMany(user => user.UserRoles)
+            .HasForeignKey(role => role.UserId)
+            .IsRequired();
+
+        builder.HasOne(role => role.Role)
+            .WithMany(role => role.UserRoles)
+            .HasForeignKey(role => role.RoleId)
+            .IsRequired();
+
     }
+
+    
 }

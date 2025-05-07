@@ -10,5 +10,10 @@ public class ApplicationRoleClaimConfiguration : IEntityTypeConfiguration<Applic
     public void Configure(EntityTypeBuilder<ApplicationRoleClaim> builder)
     {
         builder.ToTable(_tableName);
+
+        builder.HasOne(claim => claim.Role)
+            .WithMany(role => role.RoleClaims)
+            .HasForeignKey(claim => claim.RoleId)
+            .IsRequired();         
     }
 }
