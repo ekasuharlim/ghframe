@@ -15,7 +15,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
     <VerticalNavLink
       :item="{
         title: 'Laporan Persediaan Barang',
-        to: '/stock-report',
+        to: '/inventory-report',
       }"
     />
     <VerticalNavLink
