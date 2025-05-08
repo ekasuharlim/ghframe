@@ -13,5 +13,9 @@ public class WarehouseConfiguraton : IEntityTypeConfiguration<Warehouse>
     {
         builder.ToTable(_tableName);
         builder.HasKey(w => new{w.Id});
+
+        builder.HasMany(w => w.InventoryItems)
+        .WithOne(i => i.Warehouse)
+        .HasForeignKey(i => i.WarehouseId);
     }
 }
