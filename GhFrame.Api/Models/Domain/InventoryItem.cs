@@ -13,6 +13,6 @@ public class InventoryItem
     public required string ItemGroupName {get; set;} 
     
     [ForeignKey("WarehouseId")] 
-    public required Warehouse Warehouse { get; set; } 
+    public Warehouse? Warehouse { get; set; } 
 
 }
