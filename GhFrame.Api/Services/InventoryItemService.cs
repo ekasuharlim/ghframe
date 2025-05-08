@@ -28,13 +28,13 @@ public class InventoryItemService : IInventoryItemService
         return await _repository.CreateAsync(item);
     }
 
-    public async Task<InventoryItem?> UpdateAsync(string id, InventoryItem updatedItem)
+    public async Task<InventoryItem?> UpdateAsync(string id, string warehouseId, InventoryItem updatedItem)
     {
-        return await _repository.UpdateAsync(id, updatedItem);
+        return await _repository.UpdateAsync(id, warehouseId, updatedItem);
     }
 
-    public async Task<InventoryItem?> DeleteAsync(string id)
+    public async Task<InventoryItem?> DeleteAsync(string id, string warehouseId)
     {
-        return await _repository.DeleteAsync(id);
+        return await _repository.DeleteAsync(id, warehouseId);
     }
 }

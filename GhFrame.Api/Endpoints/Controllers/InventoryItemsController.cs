@@ -37,20 +37,21 @@ public class InventoryItemsController : ControllerBase
         var item = request.ToDomain();
         var created = await _service.CreateAsync(item);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToDto());
+        
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<InventoryItemDto>> Update(string id, [FromBody] UpdateInventoryItemRequest request)
+    [HttpPut("{warehouseId}/{id}")]
+    public async Task<ActionResult<InventoryItemDto>> Update(string id, string warehouseId, [FromBody] UpdateInventoryItemRequest request)
     {
-        var updatedItem = request.ToDomain(id);
-        var result = await _service.UpdateAsync(id, updatedItem);
+        var updatedItem = request.ToDomain(id, warehouseId);
+        var result = await _service.UpdateAsync(id,warehouseId, updatedItem);
         return result is not null ? Ok(result.ToDto()) : NotFound();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<InventoryItemDto>> Delete(string id)
+    [HttpDelete("{warehouseId}/{id}")]
+    public async Task<ActionResult<InventoryItemDto>> Delete(string id,  string warehouseId)
     {
-        var deleted = await _service.DeleteAsync(id);
+        var deleted = await _service.DeleteAsync(id, warehouseId);
         return deleted is not null ? Ok(deleted.ToDto()) : NotFound();
     }
 }

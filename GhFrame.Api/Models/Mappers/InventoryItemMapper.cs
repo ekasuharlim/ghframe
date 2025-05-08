@@ -45,4 +45,19 @@ public static class InventoryItemMapper
             ItemGroupName = request.ItemGroupName,
         };
     }
+
+    
+    public static InventoryItem ToDomain(this UpdateInventoryItemRequest request, 
+        string id, string warehouseId)
+    {
+        return new InventoryItem
+        {
+            Id = id,
+            WarehouseId = warehouseId,
+            Name = request.Name,
+            Quantity = request.Quantity,
+            ItemGroupName = request.ItemGroupName,
+        };
+    }
 }
+

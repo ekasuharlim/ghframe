@@ -35,23 +35,22 @@ public class InventoryItemRepository : IInventoryItemRepository
         return item;
     }
 
-    public async Task<InventoryItem?> UpdateAsync(string id, InventoryItem updatedItem)
+    public async Task<InventoryItem?> UpdateAsync(string id, string warehouseId, InventoryItem updatedItem)
     {
-        var existing = await _dbContext.InventoryItems.FindAsync(id);
+        var existing = await _dbContext.InventoryItems.FindAsync(id, warehouseId);
         if (existing == null) return null;
 
         existing.Name = updatedItem.Name;
         existing.Quantity = updatedItem.Quantity;
         existing.ItemGroupName = updatedItem.ItemGroupName;
-        existing.WarehouseId = updatedItem.WarehouseId;
 
         await _dbContext.SaveChangesAsync();
         return existing;
     }
 
-    public async Task<InventoryItem?> DeleteAsync(string id)
+    public async Task<InventoryItem?> DeleteAsync(string id, string warehouseId)
     {
-        var existing = await _dbContext.InventoryItems.FindAsync(id);
+        var existing = await _dbContext.InventoryItems.FindAsync(id, warehouseId);
         if (existing == null) return null;
 
         _dbContext.InventoryItems.Remove(existing);
