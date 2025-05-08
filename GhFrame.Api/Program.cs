@@ -17,6 +17,9 @@ using GhFrame.Api.Identity;
 using GhFrame.Api.Models;
 using GhFrame.Api.Options;
 using GhFrame.Api.Services;
+using GhFrame.Api.Abstractions.Repositories;
+using GhFrame.Api.Repositories;
+using GhFrame.Api.Abstractions.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,11 +79,13 @@ builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, ApplicationAuthorizationPolicyProvider>();
 builder.Services.AddTransient<IClaimsTransformation, PermissionClaimsTransformation>();
 
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
 builder.Services.ConfigureHttpJsonOptions(options =>
@@ -102,6 +107,8 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -167,6 +174,8 @@ app.MapGet("antiforgery/token", (IAntiforgery forgeryService, HttpContext contex
 
 app.MapAuthenticationEndpoints();
 app.MapAuthorizationEndpoints();
+app.MapControllers();
+
 
 
 await app.RunAsync();
