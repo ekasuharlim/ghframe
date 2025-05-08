@@ -1,9 +1,15 @@
-﻿namespace GhFrame.Api.Models.Shared;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace GhFrame.Api.Models.Shared;
 
 public class Result
 {
+ 
+    [MemberNotNullWhen(false, nameof(Error))]   
     public bool IsSuccess { get; }
 
+
+    [MemberNotNullWhen(true, nameof(Error))]   
     public bool IsFailure => !IsSuccess;
 
     public Error? Error { get; }

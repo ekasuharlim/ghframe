@@ -4,5 +4,6 @@ namespace GhFrame.Api.Models;
 
 public class ApplicationUserToken : IdentityUserToken<Guid>
 {
-    public ApplicationUser User { get; }
+    public required ApplicationUser User { get; set;}
+
 }

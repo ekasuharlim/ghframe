@@ -15,6 +15,12 @@ export const routes = [
         component: () => import('@/pages/home-view.vue'),
         meta: { requiresAuth: true },
       },
+      {
+        path: 'inventory-report',
+        name: 'inventory-report',
+        component: () => import('@/pages/inventory-report.vue'),
+        meta: { requiresAuth: true },
+      },
 
     ],
    },

@@ -13,8 +13,6 @@ public sealed class Permission
         Name = name;
     }
 
-    private Permission()
-    { }
 
     public static Permission Create(string name)
     {

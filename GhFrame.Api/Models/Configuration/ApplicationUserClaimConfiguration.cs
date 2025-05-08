@@ -10,5 +10,9 @@ public class ApplicationUserClaimConfiguration : IEntityTypeConfiguration<Applic
     public void Configure(EntityTypeBuilder<ApplicationUserClaim> builder)
     {
         builder.ToTable(_tableName);
+        builder.HasOne(claim => claim.User)
+            .WithMany(user => user.Claims)
+            .HasForeignKey(claim => claim.UserId)
+            .IsRequired();        
     }
 }

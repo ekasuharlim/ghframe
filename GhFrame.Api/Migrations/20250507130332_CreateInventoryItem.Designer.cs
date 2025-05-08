@@ -4,6 +4,7 @@ using GhFrame.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GhFrame.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250507130332_CreateInventoryItem")]
+    partial class CreateInventoryItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -406,7 +409,7 @@ namespace GhFrame.Api.Migrations
             modelBuilder.Entity("GhFrame.Api.Models.Domain.InventoryItem", b =>
                 {
                     b.HasOne("GhFrame.Api.Models.Domain.Warehouse", "Warehouse")
-                        .WithMany("InventoryItems")
+                        .WithMany()
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -441,11 +444,6 @@ namespace GhFrame.Api.Migrations
                     b.Navigation("Tokens");
 
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("GhFrame.Api.Models.Domain.Warehouse", b =>
-                {
-                    b.Navigation("InventoryItems");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,5 +10,11 @@ public class ApplicationUserLoginConfiguration : IEntityTypeConfiguration<Applic
     public void Configure(EntityTypeBuilder<ApplicationUserLogin> builder)
     {
         builder.ToTable(_tableName);
+
+        builder.HasOne(login => login.User)
+            .WithMany(user => user.Logins)
+            .HasForeignKey(login => login.UserId)
+            .IsRequired();
+
     }
 }

@@ -12,25 +12,25 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
         builder.ToTable(_tableName);
 
         builder.HasMany(u => u.Claims)
-            .WithOne()
+            .WithOne(auc => auc.User)
             .HasForeignKey(c => c.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(u => u.Logins)
-            .WithOne()
+            .WithOne(aul => aul.User)
             .HasForeignKey(l => l.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(u => u.Tokens)
-            .WithOne()
+            .WithOne(aut => aut.User)
             .HasForeignKey(t => t.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(u => u.UserRoles)
-            .WithOne()
+            .WithOne(aur => aur.User)
             .HasForeignKey(ur => ur.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);

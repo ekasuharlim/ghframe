@@ -4,5 +4,6 @@ namespace GhFrame.Api.Models;
 
 public class ApplicationUserClaim : IdentityUserClaim<Guid>
 {
-    public ApplicationUser User { get; }
+    public required ApplicationUser User { get; set;}
+
 }

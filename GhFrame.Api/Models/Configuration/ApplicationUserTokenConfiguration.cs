@@ -10,5 +10,10 @@ public class ApplicationUserTokenConfiguration : IEntityTypeConfiguration<Applic
     public void Configure(EntityTypeBuilder<ApplicationUserToken> builder)
     {
         builder.ToTable(_tableName);
+
+        builder.HasOne(token => token.User)
+            .WithMany(user => user.Tokens)
+            .HasForeignKey(token => token.UserId)
+            .IsRequired();
     }
 }
